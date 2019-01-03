@@ -1,0 +1,110 @@
+#include<iostream>
+#include<stack>
+#include<sstream>
+#include<string>
+
+
+using namespace std;
+
+bool operatorNum(const string& input);
+void perform(string& input, stack<double>& calcStack);
+
+
+int main()
+{
+	cout<<"welcome to rpn calculator"<<endl;
+	
+	stack<double> calcStack;
+	string input;
+	
+	while(true)
+	{
+		cout<<">>";
+		cin>>input;
+	
+		double num;
+
+		if (istringstream(input)>>num)
+		{
+			calcStack.push(num);
+		}
+		
+		else if (operatorNum(input))
+		{
+			perform(input,calcStack);
+		}
+		
+		else if (input=="q")
+		{
+			return 0;
+		}
+
+		else
+		{
+			cout<<"Invalid input"<<endl;
+		}
+
+	}
+
+}
+
+bool operatorNum(const string& input)
+{
+	string ops[]={"-","+","*","/"};
+	int i;
+
+	for(i=0;i<4;i++)
+	{
+		if(input==ops[i])
+		{
+			return true;
+		}
+	}
+	
+	return false;
+};
+
+void perform(string& input, stack<double>& calcStack)
+{
+	double lval, rval, result;
+
+	rval=calcStack.top();
+	calcStack.pop();
+	
+	lval=calcStack.top();
+	calcStack.pop();
+	
+	if (input=="-")
+	{
+		result=lval-rval;
+		cout<<"Result is "<<result<<endl;
+		
+	}
+	else if (input=="+")
+	{
+		result=lval+rval;
+		cout<<"Result is "<<result<<endl;
+		
+	}
+	
+	else if(input== "*")
+	{
+		result=lval*rval;
+		cout<<"Result is "<<result<<endl;
+		
+	}
+
+	else 
+	{
+		result=lval/rval;
+		cout<<"Result is "<<result<<endl;
+		
+	}
+
+};
+		
+
+
+
+
+
